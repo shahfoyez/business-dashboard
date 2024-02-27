@@ -49,46 +49,30 @@ define('BUSINESS_DASHBOARD_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 
 
-function activate_plugin_name() {
+function activate_business_dashboard() {
 	require_once WP_PLUGIN_DIR.'/business-dashboard/includes/Business_Dashboard_Activator.php';
 	Business_Dashboard_Activator::activate();
 }
+function deactivate_business_dashboard() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/Business_Dashboard_Deactivator.php';
+	Business_Dashboard_Deactivator::deactivate();
+}
+register_activation_hook( __FILE__, 'activate_business_dashboard' );
+register_deactivation_hook( __FILE__, 'deactivate_business_dashboard' );
 
-//function deactivate_plugin_name() {
-//	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-deactivator.php';
-//	Plugin_Name_Deactivator::deactivate();
-//}
-
-register_activation_hook( __FILE__, 'activate_plugin_name' );
-//register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
-
-
-
-// Add custom page template to theme
-function business_dashboard_template($templates)
-{
-	$templates['business-dashboard-template.php'] = __('Business Dashboard', 'business-dashboard');
+function business_dashboard_templates($templates) {
+	$templates['dashboard.php'] = __('Dashboard', 'dashboard');
+	$templates['add-manager.php'] = __('Add Manager', 'add-manager');
 	return $templates;
 }
-add_filter('theme_page_templates', 'business_dashboard_template');
 
-add_action('template_include', 'mcd_set_template', 99);
-function mcd_set_template()
-{
-	$page_template = 'business-dashboard-template.php';
-	$template_file = plugin_dir_path( __FILE__ ) . 'views/' . $page_template;
-	return  $template_file;
-}
-
-// Enqueue CSS and JS for the dashboard page
-function business_dashboard_enqueue_scripts()
-{
-	if (is_page_template('business-dashboard-template.php')) {
-		// Enqueue CSS
-		wp_enqueue_style('business-dashboard-css', BUSINESS_DASHBOARD_PLUGIN_URL . 'assets/css/business-dashboard.css', array(), '1.0');
-
-		// Enqueue JS
-		wp_enqueue_script('business-dashboard-js', BUSINESS_DASHBOARD_PLUGIN_URL . 'assets/js/business-dashboard.js', array('jquery'), '1.0', true);
+add_filter('theme_page_templates', 'business_dashboard_templates');
+function mcd_set_template($template) {
+	if (is_page_template('dashboard.php')) {
+		$template = plugin_dir_path(__FILE__) . 'views/dashboard.php';
+	} elseif (is_page_template('add-manager.php')) {
+		$template = plugin_dir_path(__FILE__) . 'views/add-manager.php';
 	}
+	return $template;
 }
-add_action('wp_enqueue_scripts', 'business_dashboard_enqueue_scripts');
+add_filter('template_include', 'mcd_set_template', 99);

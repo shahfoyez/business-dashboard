@@ -21,16 +21,7 @@
  * @author     Your Name <email@example.com>
  */
 class Business_Dashboard_Deactivator {
-
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
 	public static function deactivate() {
 
 	}
-
 }
