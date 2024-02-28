@@ -6,7 +6,7 @@ class Business_Dashboard_Activator {
 	}
 
 	public static function activate() {
-		$views_dir = WP_PLUGIN_DIR . '/business-dashboard/views/';
+		$views_dir = WP_PLUGIN_DIR . '/business-dashboard/templates/';
 		$template_files = scandir($views_dir);
 		// Remove . and .. from the list
 		$template_files = array_diff($template_files, array('..', '.'));

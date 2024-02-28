@@ -8,7 +8,7 @@
 <h1>Dashboard</h1>
 <?php
 // Define the path to your views folder
-$views_dir = WP_PLUGIN_DIR . '/business-dashboard/views/';
+$views_dir = WP_PLUGIN_DIR . '/business-dashboard/templates/';
 
 
 // Get list of template files
