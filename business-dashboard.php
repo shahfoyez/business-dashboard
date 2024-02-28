@@ -6,49 +6,6 @@
  * Version: 1.0
  * Author: Staff Asia
  */
-
-// Define plugin constants
-define('BUSINESS_DASHBOARD_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('BUSINESS_DASHBOARD_PLUGIN_URL', plugin_dir_url(__FILE__));
-
-// Activation hook: Create the page on plugin activation
-//register_activation_hook(__FILE__, 'business_dashboard_create_page');
-
-// Create the business dashboard page
-//function business_dashboard_create_page()
-//{
-//	$page_title = 'Business Dashboard';
-//	$page_template = 'business-dashboard-template.php';
-//
-//	// Check if the page doesn't exist already
-//	$page_check = get_page_by_title($page_title);
-//
-//	if (empty($page_check)) {
-//		$template_file = plugin_dir_path( __FILE__ ) . 'views/' . $page_template;
-//
-//		// Check if the file exists
-//		if (file_exists($template_file)) {
-//			$page_content = file_get_contents($template_file);
-//
-//			$page_id = wp_insert_post(array(
-//				'post_title'    => $page_title,
-//				'post_content'  => '',
-//				'post_status'   => 'publish',
-//				'post_type'     => 'page',
-//			));
-//
-//			// Assign the custom template to the page
-//			update_post_meta($page_id, '_wp_page_template', $page_template);
-//		} else {
-//			// Handle the case where the template file doesn't exist
-//			echo 'Template file does not exist.';
-//		}
-//	}
-//}
-
-
-
-
 function activate_business_dashboard() {
 	require_once WP_PLUGIN_DIR.'/business-dashboard/includes/Business_Dashboard_Activator.php';
 	Business_Dashboard_Activator::activate();
@@ -76,3 +33,11 @@ function mcd_set_template($template) {
 	return $template;
 }
 add_filter('template_include', 'mcd_set_template', 99);
+
+function my_plugin_styles_and_scripts() {
+	// Enqueue CSS
+	wp_enqueue_style('fullcalendar', plugins_url('/business-dashboard/views/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', __FILE__));
+	wp_enqueue_style('global-plugins', plugins_url('/business-dashboard/views/assets/plugins/global/plugins.bundle.css', __FILE__));
+	wp_enqueue_style('custom-style', plugins_url('/business-dashboard/views/assets/css/style.bundle.css', __FILE__));
+}
+add_action('wp_enqueue_scripts', 'my_plugin_styles_and_scripts');

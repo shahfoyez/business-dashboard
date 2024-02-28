@@ -1,27 +1,24 @@
 <?php
-
-/**
- * Fired during plugin deactivation
- *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- */
-
-/**
- * Fired during plugin deactivation.
- *
- * This class defines all code necessary to run during the plugin's deactivation.
- *
- * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
- */
 class Business_Dashboard_Deactivator {
 	public static function deactivate() {
+		$views_dir = WP_PLUGIN_DIR . '/business-dashboard/views/';
+		$template_files = scandir($views_dir);
+		// Remove . and .. from the list
+		$template_files = array_diff($template_files, array('..', '.'));
 
+		foreach ($template_files as $template_file) {
+			// Check if it's a PHP file
+			if (pathinfo($template_file, PATHINFO_EXTENSION) === 'php') {
+				$page_title = ucwords(str_replace(array('-', '_'), ' ', pathinfo($template_file, PATHINFO_FILENAME)));
+
+				// Find the page by title
+				$page = get_page_by_title($page_title);
+
+				// If page exists, delete it
+				if ($page) {
+					wp_delete_post($page->ID, true); // Set second parameter to true to force delete
+				}
+			}
+		}
 	}
 }

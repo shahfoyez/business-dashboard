@@ -1,0 +1,4 @@
+// add this inside function.php to work with ajax, change the class name if needed
+if (!class_exists('BDAjaxController')) {
+	require_once WP_PLUGIN_DIR . '/ct-automation/classes/BDAjaxController.php';
+}
