@@ -26,9 +26,9 @@ function business_dashboard_templates($templates) {
 add_filter('theme_page_templates', 'business_dashboard_templates');
 function mcd_set_template($template) {
 	if (is_page_template('dashboard.php')) {
-		$template = plugin_dir_path(__FILE__) . 'views/dashboard.php';
+		$template = plugin_dir_path(__FILE__) . 'templates/dashboard.php';
 	} elseif (is_page_template('add-manager.php')) {
-		$template = plugin_dir_path(__FILE__) . 'views/add-manager.php';
+		$template = plugin_dir_path(__FILE__) . 'templates/add-manager.php';
 	}
 	return $template;
 }
@@ -36,8 +36,8 @@ add_filter('template_include', 'mcd_set_template', 99);
 
 function my_plugin_styles_and_scripts() {
 	// Enqueue CSS
-	wp_enqueue_style('fullcalendar', plugins_url('/business-dashboard/views/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', __FILE__));
-	wp_enqueue_style('global-plugins', plugins_url('/business-dashboard/views/assets/plugins/global/plugins.bundle.css', __FILE__));
-	wp_enqueue_style('custom-style', plugins_url('/business-dashboard/views/assets/css/style.bundle.css', __FILE__));
+	wp_enqueue_style('fullcalendar', plugins_url('/business-dashboard/templates/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css', __FILE__));
+	wp_enqueue_style('global-plugins', plugins_url('/business-dashboard/templates/assets/plugins/global/plugins.bundle.css', __FILE__));
+	wp_enqueue_style('custom-style', plugins_url('/business-dashboard/templates/assets/css/style.bundle.css', __FILE__));
 }
 add_action('wp_enqueue_scripts', 'my_plugin_styles_and_scripts');
