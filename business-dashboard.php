@@ -6,6 +6,7 @@
  * Version: 1.0
  * Author: Staff Asia
  */
+
 function activate_business_dashboard() {
 	require_once WP_PLUGIN_DIR.'/business-dashboard/includes/Business_Dashboard_Activator.php';
 	Business_Dashboard_Activator::activate();
